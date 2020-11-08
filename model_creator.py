@@ -4,7 +4,7 @@ import joblib
 import io
 from six.moves.urllib.request import urlopen
 #Trainng
-'''
+
 import os
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -19,28 +19,22 @@ train, test = train_test_split(dt)
 #print(test.shape)
 
 train_X = train[['chroma_stft','spec_cent','spec_bw','rolloff','zcr','mfcc']]# features
-train_y = train.prognosis#labels
+train_y = train.prognosis #labels
 
 test_X = test[['chroma_stft','spec_cent','spec_bw','rolloff','zcr','mfcc']]
 test_y = test.prognosis
 
 #knn
-model = KNeighborsClassifier(n_neighbors=3)#KNN Model for classification
+model = KNeighborsClassifier(n_neighbors=3) #KNN Model for classification
 model.fit(train_X, train_y)
 
 
-#joblib.dump(model, 'covid_cough_model.sav')#save model using joblib
+joblib.dump(model, 'covid_cough_model.sav') #save model using joblib
 
 print("model saved")
-'''
 
-audio = 'neg-cough.wav'
-
-url = "https://firebasestorage.googleapis.com/v0/b/server-65459.appspot.com/o/neg-cough.wav?alt=media&token=bd7a2d9f-b5f4-41d8-869d-9d61fd31fe17"
-#y, sr = librosa.load(io.BytesIO(urlopen(url).read()))
-#print(y.shape)
-#print(sr)
-y , sr = librosa.load(audio, mono=True, duration=1)
+url = "https://firebasestorage.googleapis.com/v0/b/server-65459.appspot.com/o/neg-cough.wav?alt=media&token=bd7a2d9f-b5f4-41d8-869d-9d61fd31fe17"# an example url where the cough audio is manually uploaded
+y, sr = librosa.load(io.BytesIO(urlopen(url).read()))
 #print(y.shape)
 #print(sr)
 
@@ -64,5 +58,5 @@ model = joblib.load('covid_cough_model.sav')
 val = np.array([chroma_stft,spec_cent,spec_bw,rolloff,zcr,mfcc])
 val=val.reshape(1,-1)
 prediction = model.predict(val)
-help(len(prediction[0]))
+print(prediction[0])
 
