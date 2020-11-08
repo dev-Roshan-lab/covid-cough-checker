@@ -10,8 +10,8 @@ def append_list_as_row(file_name, list_of_elem):
         csv_writer = writer(write_obj)
         # Add contents of list as last row in the csv file
         csv_writer.writerow(list_of_elem)
-        
-for count, filename in enumerate(os.listdir('pos')):
+       
+for count, filename in enumerate(os.listdir('pos')): # we run the same for neagtive i.e change pos to neg, "pos" and "neg" are folder names containg positive and negative samples
     audio = "pos/"+filename
     print(audio)
     
