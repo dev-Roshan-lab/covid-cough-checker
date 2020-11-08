@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.debug = True
 path = (os.path.abspath(os.path.dirname(__file__).replace("",""))+"//asset//model.sav")
 print(path)
-firebase = firebase.FirebaseApplication("https://drding-26dcc.firebaseio.com/", None)
+firebase = firebase.FirebaseApplication("(ur_firebase_realtime_db_url)", None)
 
 @app.route('/')
 def home():
@@ -27,12 +27,12 @@ def home():
 @app.route('/predict/<phno>')
 def upload(phno):
     
-    req_id = '%s' % phno
+    req_id = '%s' % phno # I use phone number here becasuse it is unique for everyone so it will be easy to find the audio sample from the db!
     
     data = firebase.get('/drding-covid/'+ req_id, '')
     url = data["audio"]
     
-    y, sr = librosa.load(io.BytesIO(urlopen(url).read()))
+    y, sr = librosa.load(io.BytesIO(urlopen(url).read()))# librosa uses dosent support reading audio files from url so we have to convert in to bytes and read from a link for more infocheck: https://stackoverflow.com/questions/62669692/librosa-read-mp3-audio-from-url
     #print(sr)
     #print(y)
 
