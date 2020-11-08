@@ -53,6 +53,7 @@ rolloff = np.mean(rolloff)
 zcr = np.mean(zcr)
 mfcc = np.mean(mfcc)
 
+#prediction
 model = joblib.load('covid_cough_model.sav')
 #print(model)
 val = np.array([chroma_stft,spec_cent,spec_bw,rolloff,zcr,mfcc])
